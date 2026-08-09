@@ -34,15 +34,17 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] `components/Header.tsx` shared component
 - [x] `.gitignore` for node_modules/.expo/.env
 
-## Stage 4 — Customer App Screens
-- [x] Home screen (`.tsx`, category rows, per-category horizontal scroll) — done as prototype reference
-- [ ] Product listing (Shop) + Product details (sizes, add to cart)
-- [ ] Cart
-- [ ] Checkout (address selection, Cash on Delivery / Pay with Card, order summary)
-- [ ] Order confirmation
-- [ ] Profile (guest vs logged-in states)
-- [ ] Order history + order detail
-- [ ] Address book (add/edit/select)
+## Stage 4 — Customer App Screens ✅ DONE (one known gap)
+- [x] Home screen (category rows, per-category horizontal scroll)
+- [x] Product detail (size selection, add to cart)
+- [x] Cart (quantity controls, remove, live subtotal)
+- [x] Checkout (payment method toggle COD/Card, order summary, places real order via `/api/orders`)
+- [x] Profile (guest vs logged-in states, wired to real Firebase auth state)
+- [x] Shop screen (category filter, grid)
+- [x] Order history + order detail (existing from starter assets)
+- [x] Address book screen (existing from starter assets)
+- [x] Shared `context/CartContext.tsx` + tab bar layout (`app/(tabs)/_layout.tsx`)
+- [ ] **Known gap:** Checkout doesn't yet pull a real address from `/addresses` — currently submits an empty placeholder `shippingAddress`. Needs an address-picker wired in before this is truly usable.
 
 ## Stage 5 — Auth (Clerk → Firebase port) ✅ DONE
 - [x] `app/auth/sign-in.tsx` uses Firebase `signInWithEmailAndPassword`, then calls `/api/auth/sync`
@@ -50,11 +52,12 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] Firebase users linked to Mongo `User` docs via `firebaseUid` (backend `/api/auth/sync` route)
 - [ ] Guest vs authenticated navigation states — needs a look once Profile screen (Stage 4) is built
 
-## Stage 6 — Admin Panel (code in place, needs functional review)
+## Stage 6 — Admin Panel ✅ DONE
 - [x] `app/admin/index.tsx` — dashboard
 - [x] `app/admin/products/` — index (list), add, edit/[id]
 - [x] `app/admin/orders.tsx` — order list + status update
-- [x] `app/admin/_layout.tsx`, `app/admin/products/_layout.tsx` — role-gating layouts (confirm they actually check role === "admin", not yet re-verified line by line)
+- [x] Role-gating fixed: `app/admin/_layout.tsx` previously used a hardcoded `dummyUser` + Clerk-style `publicMetadata.role` check left over from the original tutorial code (a real bug — admin gating wasn't actually checking real auth). Replaced with real Firebase `onAuthStateChanged` + `/api/auth/me` role lookup, verified via `tsc --noEmit` and a diff confirming the old pattern is gone from the pushed file.
+- [ ] Dashboard/Products/Orders admin screens still read dummy data (`dummyProducts`/`dummyOrders`) rather than real API calls — expected until Stage 8 deployment, same gap as the customer screens
 
 ## Stage 7 — Build Verification & Push
 - [ ] `npx tsc --noEmit` on backend and frontend before any push (lesson learned from other projects)
