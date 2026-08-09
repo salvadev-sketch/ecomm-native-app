@@ -12,6 +12,7 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] Stack decisions locked: Firebase auth (not Clerk), shared Atlas cluster, new repo
 - [x] Repo created: `ecomm-native-app`
 - [x] Full project spec written (`docs/PROJECT-PROMPT.md`)
+- [x] Standalone interactive HTML prototype pushed (`frontend/prototype.html`) — customer app + admin panel toggle, matches gigo-food's static-prototype pattern
 
 ## Stage 2 — Backend Foundation (in progress)
 - [x] `backend/package.json` (express, mongoose, firebase-admin, bcryptjs, cors, dotenv, multer, nodemailer)
@@ -26,9 +27,10 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [ ] `backend/scripts/seedProducts.js` — ported from assets/scripts/seedProducts.ts
 - [ ] Env vars: MONGO_URI (dedicated `ecomm-native-app` database on shared cluster), FIREBASE_* service account creds
 
-## Stage 3 — Frontend Foundation
+## Stage 3 — Frontend Foundation (in progress)
 - [ ] Expo project files: `app.json`, `package.json`, `tsconfig.json`, `babel.config.js`, NativeWind/Tailwind config
-- [ ] Copy in real starter assets (auth, admin, orders, addresses, constants, types, product images) — done for Home screen already
+- [x] Product images, logo/favicon, constants, types, seed script pushed to `frontend/assets/`
+- [ ] Copy in remaining real starter assets (auth, admin, orders, addresses screen code — Home done, rest pending)
 - [ ] Firebase client SDK setup (`firebaseConfig.ts`)
 - [ ] API base URL wiring (`EXPO_PUBLIC_API_URL` or similar)
 
