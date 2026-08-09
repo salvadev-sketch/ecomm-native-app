@@ -1,22 +1,45 @@
 import { Tabs, useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { View, ActivityIndicator, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/config/firebaseConfig";
+import { api } from "@/config/api";
 import { COLORS } from "@/constants";
-import { dummyUser } from "@/assets/assets";
+import type { User } from "@/constants/types";
 
 export default function AdminLayout() {
-    const { user } = { user: dummyUser }
-    const isLoaded = true;
     const router = useRouter();
+    const [profile, setProfile] = useState<User | null>(null);
+    const [checking, setChecking] = useState(true);
 
     useEffect(() => {
-        if (isLoaded && (!user || user.publicMetadata?.role !== "admin")) {
+        const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+            if (!firebaseUser) {
+                setProfile(null);
+                setChecking(false);
+                return;
+            }
+            try {
+                const token = await firebaseUser.getIdToken();
+                const me = await api.get("/api/auth/me", token);
+                setProfile(me);
+            } catch {
+                setProfile(null);
+            } finally {
+                setChecking(false);
+            }
+        });
+        return unsub;
+    }, []);
+
+    useEffect(() => {
+        if (!checking && (!profile || profile.role !== "admin")) {
             router.replace("/(tabs)");
         }
-    }, [isLoaded, user]);
+    }, [checking, profile]);
 
-    if (!isLoaded) {
+    if (checking) {
         return (
             <View className="flex-1 justify-center items-center bg-surface">
                 <ActivityIndicator size="large" color={COLORS.primary} />
@@ -24,7 +47,7 @@ export default function AdminLayout() {
         );
     }
 
-    if (!user || user.publicMetadata?.role !== "admin") return null;
+    if (!profile || profile.role !== "admin") return null;
 
     return (
         <Tabs
