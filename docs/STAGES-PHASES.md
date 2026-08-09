@@ -14,25 +14,25 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] Full project spec written (`docs/PROJECT-PROMPT.md`)
 - [x] Standalone interactive HTML prototype pushed (`frontend/prototype.html`) — customer app + admin panel toggle, matches gigo-food's static-prototype pattern
 
-## Stage 2 — Backend Foundation (in progress)
+## Stage 2 — Backend Foundation ✅ DONE
 - [x] `backend/package.json` (express, mongoose, firebase-admin, bcryptjs, cors, dotenv, multer, nodemailer)
-- [x] `backend/models/User.js` (firebaseUid, name, email, role, phone, address)
-- [x] `backend/models/Product.js` (name, price, comparePrice, images, sizes, category, stock, ratings, isFeatured/isActive)
-- [x] `backend/models/Address.js` (type Home/Work/Other, isDefault)
-- [ ] `backend/models/Order.js` (items, shippingAddress, paymentMethod, paymentStatus, orderStatus, totals)
-- [ ] `backend/middleware/` — Firebase ID token verification + admin role check
-- [ ] `backend/config/` — Mongo connection, Firebase Admin init
-- [ ] `backend/routes/` — auth-sync, products, orders, addresses
-- [ ] `backend/index.js` — server entry (mongoose.connect() awaited before app.listen())
-- [ ] `backend/scripts/seedProducts.js` — ported from assets/scripts/seedProducts.ts
-- [ ] Env vars: MONGO_URI (dedicated `ecomm-native-app` database on shared cluster), FIREBASE_* service account creds
+- [x] `backend/models/User.js`, `Product.js`, `Address.js`, `Order.js`
+- [x] `backend/middleware/auth.js` — Firebase ID token verification + admin role check
+- [x] `backend/config/db.js`, `config/firebase.js` — Mongo connection, Firebase Admin init
+- [x] `backend/routes/` — auth (sync/me), products (CRUD), orders (create/list/admin/status), addresses (CRUD)
+- [x] `backend/index.js` — server entry (mongoose.connect() awaited before app.listen(), verified locally)
+- [x] `backend/.env.example` committed
+- [ ] `backend/scripts/seedProducts.js` — ported from assets/scripts/seedProducts.ts (raw .ts version pushed under frontend/assets/scripts, JS port for backend not yet done)
+- [ ] Real env vars set on Render: MONGO_URI (dedicated `ecomm-native-app` database on shared cluster), FIREBASE_* service account creds — not deployed yet
 
-## Stage 3 — Frontend Foundation (in progress)
-- [ ] Expo project files: `app.json`, `package.json`, `tsconfig.json`, `babel.config.js`, NativeWind/Tailwind config
+## Stage 3 — Frontend Foundation ✅ DONE
+- [x] Expo project files: `app.json`, `package.json`, `tsconfig.json`, `babel.config.js`, NativeWind/Tailwind config, `global.css`
 - [x] Product images, logo/favicon, constants, types, seed script pushed to `frontend/assets/`
-- [ ] Copy in remaining real starter assets (auth, admin, orders, addresses screen code — Home done, rest pending)
-- [ ] Firebase client SDK setup (`firebaseConfig.ts`)
-- [ ] API base URL wiring (`EXPO_PUBLIC_API_URL` or similar)
+- [x] All starter screens (auth, admin, orders, addresses) moved into `app/` and wired as real Expo Router routes — confirmed via `npx tsc --noEmit` (0 errors) after the move
+- [x] Firebase client SDK setup (`config/firebaseConfig.ts`) — persistence via AsyncStorage, safe against Fast Refresh double-init
+- [x] API base URL wiring (`config/api.ts`, `EXPO_PUBLIC_API_URL` with localhost fallback)
+- [x] `components/Header.tsx` shared component
+- [x] `.gitignore` for node_modules/.expo/.env
 
 ## Stage 4 — Customer App Screens
 - [x] Home screen (`.tsx`, category rows, per-category horizontal scroll) — done as prototype reference
@@ -44,17 +44,17 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [ ] Order history + order detail
 - [ ] Address book (add/edit/select)
 
-## Stage 5 — Auth (Clerk → Firebase port)
-- [ ] Rewrite `auth/sign-in.tsx` from Clerk hooks to Firebase Auth (email/password)
-- [ ] Rewrite `auth/sign-up.tsx` same way
-- [ ] Link Firebase users to Mongo `User` docs via `firebaseUid`
-- [ ] Guest vs authenticated navigation states
+## Stage 5 — Auth (Clerk → Firebase port) ✅ DONE
+- [x] `app/auth/sign-in.tsx` uses Firebase `signInWithEmailAndPassword`, then calls `/api/auth/sync`
+- [x] `app/auth/sign-up.tsx` ported the same way
+- [x] Firebase users linked to Mongo `User` docs via `firebaseUid` (backend `/api/auth/sync` route)
+- [ ] Guest vs authenticated navigation states — needs a look once Profile screen (Stage 4) is built
 
-## Stage 6 — Admin Panel
-- [ ] Dashboard (revenue, orders, products, users stats + recent orders)
-- [ ] Products: list/manage, add product (images max 5, sizes, stock), edit product
-- [ ] Orders: list with customer + shipping info, update order status (Placed/Processing/Shipped/Delivered/Cancelled)
-- [ ] Role-gate admin routes (role === "admin")
+## Stage 6 — Admin Panel (code in place, needs functional review)
+- [x] `app/admin/index.tsx` — dashboard
+- [x] `app/admin/products/` — index (list), add, edit/[id]
+- [x] `app/admin/orders.tsx` — order list + status update
+- [x] `app/admin/_layout.tsx`, `app/admin/products/_layout.tsx` — role-gating layouts (confirm they actually check role === "admin", not yet re-verified line by line)
 
 ## Stage 7 — Build Verification & Push
 - [ ] `npx tsc --noEmit` on backend and frontend before any push (lesson learned from other projects)
