@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ecomm-native-app — Interactive Prototype</title>
+<style>
+  :root {
+    --primary: #111111;
+    --secondary: #666666;
+    --background: #FFFFFF;
+    --surface: #F7F7F7;
+    --accent: #FF4C3B;
+    --border: #EEEEEE;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #1a1a1a;
+    color: var(--primary);
+    margin: 0;
+    padding: 32px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 { color: #fff; font-size: 18px; font-weight: 500; margin-bottom: 4px; }
+  p.sub { color: #999; font-size: 13px; margin-top: 0; margin-bottom: 24px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .tabs button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+    background: transparent;
+    color: #fff;
+  }
+  .tabs button.active { background: var(--accent); color: #fff; }
+
+  #customer-view { display: flex; justify-content: center; }
+  .phone-wrap { background: #2a2a2a; border-radius: 20px; padding: 14px; }
+  .phone {
+    width: 300px; height: 580px; background: #fff; border-radius: 22px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  #screen-content { flex: 1; overflow-y: auto; padding: 14px; font-size: 13px; }
+  .navbar { display: flex; border-top: 1px solid var(--border); background: #fff; }
+  .navbtn {
+    flex: 1; background: none; border: none; padding: 12px 0; font-size: 11px;
+    color: var(--secondary); cursor: pointer;
+  }
+  .navbtn.active { color: var(--primary); font-weight: 600; }
+
+  #admin-view { display: none; width: 100%; max-width: 720px; }
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .admin-tabs button {
+    padding: 8px 16px; border-radius: 8px; border: none; font-size: 13px; cursor: pointer;
+    background: #2a2a2a; color: #fff;
+  }
+  .admin-tabs button.active { background: var(--primary); }
+  #admin-content { background: #fff; border-radius: 12px; padding: 20px; }
+
+  .badge { font-size: 12px; padding: 2px 8px; border-radius: 6px; background: var(--surface); color: var(--secondary); }
+  .btn-primary {
+    width: 100%; background: var(--primary); color: #fff; border: none;
+    border-radius: 20px; padding: 10px; font-size: 13px; font-weight: 500; cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<h1>ecomm-native-app</h1>
+<p class="sub">Interactive prototype — customer app + admin panel</p>
+
+<div class="tabs">
+  <button id="tab-customer" class="active" onclick="setMode('customer')">Customer app</button>
+  <button id="tab-admin" onclick="setMode('admin')">Admin panel</button>
+</div>
+
+<div id="customer-view">
+  <div class="phone-wrap">
+    <div class="phone">
+      <div id="screen-content"></div>
+      <div class="navbar">
+        <button class="navbtn" data-screen="home">Home</button>
+        <button class="navbtn" data-screen="product">Product</button>
+        <button class="navbtn" data-screen="cart">Cart</button>
+        <button class="navbtn" data-screen="checkout">Checkout</button>
+        <button class="navbtn" data-screen="profile">Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="admin-view">
+  <div class="admin-tabs">
+    <button class="adminbtn active" data-panel="dashboard">Dashboard</button>
+    <button class="adminbtn" data-panel="products">Products</button>
+    <button class="adminbtn" data-panel="orders">Orders</button>
+  </div>
+  <div id="admin-content"></div>
+</div>
+
+<script>
+const COLORS = { primary: "#111111", secondary: "#666666", surface: "#F7F7F7", accent: "#FF4C3B", border: "#EEEEEE" };
+
+const screens = {
+  home: `<div style="font-weight:500;font-size:15px;margin-bottom:10px;">Home</div>
+    <div style="background:${COLORS.accent};color:#fff;border-radius:10px;padding:12px;margin-bottom:12px;">
+      <div style="font-size:11px;opacity:.9;">Limited time</div>
+      <div style="font-weight:500;">20% off new arrivals</div>
+    </div>
+    <div style="font-size:12px;color:${COLORS.secondary};margin-bottom:6px;">Categories</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      ${["Men","Women","Kids","Shoes","Bag"].map(c=>`<div style="text-align:center;flex:1;"><div style="width:32px;height:32px;border-radius:50%;background:${COLORS.surface};margin:0 auto 4px;"></div><div style="font-size:10px;color:${COLORS.secondary};">${c}</div></div>`).join("")}
+    </div>
+    <div style="font-size:12px;color:${COLORS.secondary};margin-bottom:6px;">Popular</div>
+    <div style="display:flex;gap:8px;">
+      <div style="flex:1;background:${COLORS.surface};border-radius:8px;padding:8px;"><div style="height:60px;background:#e5e5e5;border-radius:6px;margin-bottom:6px;"></div><div style="font-size:11px;">Cotton T-shirt</div><div style="font-size:11px;font-weight:500;">$80.00</div></div>
+      <div style="flex:1;background:${COLORS.surface};border-radius:8px;padding:8px;"><div style="height:60px;background:#e5e5e5;border-radius:6px;margin-bottom:6px;"></div><div style="font-size:11px;">Flat-front trousers</div><div style="font-size:11px;font-weight:500;">$72.00</div></div>
+    </div>`,
+
+  product: `<div style="height:180px;background:${COLORS.surface};border-radius:10px;margin-bottom:12px;"></div>
+    <div style="font-weight:500;font-size:14px;">Men round neck pure cotton t-shirt</div>
+    <div style="font-size:13px;color:${COLORS.secondary};margin-bottom:8px;">4.6 rating &middot; 85 reviews</div>
+    <div style="font-weight:500;font-size:16px;margin-bottom:10px;">$80.00</div>
+    <div style="font-size:12px;color:${COLORS.secondary};margin-bottom:6px;">Size</div>
+    <div style="display:flex;gap:6px;margin-bottom:14px;">
+      ${["S","M","L","XL","XXL"].map((s,i)=>`<div style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;${i===1?`background:${COLORS.primary};color:#fff;`:`border:1px solid ${COLORS.border};color:${COLORS.primary};`}">${s}</div>`).join("")}
+    </div>
+    <button class="btn-primary">Add to cart</button>`,
+
+  cart: `<div style="font-weight:500;font-size:15px;margin-bottom:12px;">Cart</div>
+    ${[["Cotton t-shirt","M","$80.00"],["Flat-front trousers","M","$72.00"]].map(([n,s,p])=>`<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid ${COLORS.border};align-items:center;">
+      <div style="width:44px;height:44px;background:${COLORS.surface};border-radius:6px;"></div>
+      <div style="flex:1;"><div style="font-size:12px;">${n}</div><div style="font-size:11px;color:${COLORS.secondary};">Size ${s}</div></div>
+      <div style="font-size:12px;font-weight:500;">${p}</div>
+    </div>`).join("")}
+    <div style="display:flex;justify-content:space-between;margin-top:14px;font-weight:500;font-size:13px;"><span>Total</span><span>$152.00</span></div>
+    <button class="btn-primary" style="margin-top:10px;">Checkout</button>`,
+
+  checkout: `<div style="font-weight:500;font-size:15px;margin-bottom:12px;">Checkout</div>
+    <div style="font-size:11px;color:${COLORS.secondary};margin-bottom:4px;">Shipping address</div>
+    <div style="background:${COLORS.surface};border-radius:8px;padding:10px;font-size:12px;margin-bottom:12px;">Home<br><span style="color:${COLORS.secondary};">Kigali, Rwanda</span></div>
+    <div style="font-size:11px;color:${COLORS.secondary};margin-bottom:4px;">Payment method</div>
+    <div style="border:1px solid ${COLORS.primary};border-radius:8px;padding:10px;font-size:12px;margin-bottom:8px;display:flex;justify-content:space-between;">Cash on delivery <span>&#10003;</span></div>
+    <div style="border:1px solid ${COLORS.border};border-radius:8px;padding:10px;font-size:12px;color:${COLORS.secondary};margin-bottom:14px;">Pay with card</div>
+    <div style="font-size:12px;color:${COLORS.secondary};display:flex;justify-content:space-between;"><span>Subtotal</span><span>$152.00</span></div>
+    <div style="font-size:12px;color:${COLORS.secondary};display:flex;justify-content:space-between;margin-bottom:10px;"><span>Shipping</span><span>$2.00</span></div>
+    <button class="btn-primary">Place order</button>`,
+
+  profile: `<div style="text-align:center;margin-bottom:16px;">
+      <div style="width:56px;height:56px;border-radius:50%;background:${COLORS.surface};margin:0 auto 8px;"></div>
+      <div style="font-weight:500;font-size:14px;">GreatStack Dev</div>
+      <div style="font-size:11px;color:${COLORS.secondary};">user@ecomm.app</div>
+    </div>
+    ${["My orders","Shipping addresses","My reviews","Settings"].map(t=>`<div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid ${COLORS.border};font-size:12px;">${t}<span style="color:${COLORS.secondary};">&#8250;</span></div>`).join("")}
+    <div style="color:${COLORS.accent};font-size:12px;padding:12px 0;">Log out</div>`
+};
+
+const adminPanels = {
+  dashboard: `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;">
+      ${[["Revenue","$623.00"],["Orders","4"],["Products","52"],["Users","2"]].map(([l,v])=>`<div style="background:${COLORS.surface};border-radius:8px;padding:16px;"><div style="font-size:13px;color:${COLORS.secondary};margin-bottom:4px;">${l}</div><div style="font-size:24px;font-weight:500;">${v}</div></div>`).join("")}
+    </div>
+    <div style="font-size:14px;font-weight:500;margin-bottom:8px;">Recent orders</div>
+    <div style="border:1px solid ${COLORS.border};border-radius:12px;overflow:hidden;">
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid ${COLORS.border};"><span style="font-size:13px;">GreatStack Dev &middot; 2 items</span><span style="font-size:13px;font-weight:500;">$154.00</span></div>
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;"><span style="font-size:13px;">Avinash Kr &middot; 1 item</span><span style="font-size:13px;font-weight:500;">$27.00</span></div>
+    </div>`,
+
+  products: `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;"><div style="font-size:14px;font-weight:500;">Manage products</div><button style="background:${COLORS.primary};color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:12px;cursor:pointer;">+ Add product</button></div>
+    <div style="border:1px solid ${COLORS.border};border-radius:12px;overflow:hidden;">
+      ${[["Men round neck t-shirt","$80.00","24"],["Tapered fit trousers","$72.00","18"],["Boy round neck t-shirt","$25.00","40"]].map((r,i)=>`<div style="display:flex;gap:12px;align-items:center;padding:10px 16px;${i<2?`border-bottom:1px solid ${COLORS.border};`:""}"><div style="width:32px;height:32px;background:${COLORS.surface};border-radius:6px;"></div><div style="flex:1;font-size:13px;">${r[0]}</div><div style="font-size:13px;width:60px;">${r[1]}</div><div style="font-size:12px;color:${COLORS.secondary};width:70px;">Stock ${r[2]}</div></div>`).join("")}
+    </div>`,
+
+  orders: `<div style="font-size:14px;font-weight:500;margin-bottom:16px;">Orders</div>
+    ${[["GreatStack Dev","2 items","$154.00","Placed"],["Avinash Kr","1 item","$27.00","Shipped"]].map(([n,i,p,s])=>`<div style="border:1px solid ${COLORS.border};border-radius:12px;padding:12px 16px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px;"><span style="font-size:13px;font-weight:500;">${n}</span><span class="badge">${s}</span></div>
+      <div style="font-size:12px;color:${COLORS.secondary};display:flex;justify-content:space-between;"><span>${i}</span><span style="font-weight:500;color:${COLORS.primary};">${p}</span></div>
+    </div>`).join("")}`
+};
+
+function renderScreen(name) {
+  document.getElementById('screen-content').innerHTML = screens[name];
+  document.querySelectorAll('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.screen === name));
+}
+document.querySelectorAll('.navbtn').forEach(b => b.addEventListener('click', () => renderScreen(b.dataset.screen)));
+renderScreen('home');
+
+function renderAdmin(name) {
+  document.getElementById('admin-content').innerHTML = adminPanels[name];
+  document.querySelectorAll('.adminbtn').forEach(b => b.classList.toggle('active', b.dataset.panel === name));
+}
+document.querySelectorAll('.adminbtn').forEach(b => b.addEventListener('click', () => renderAdmin(b.dataset.panel)));
+renderAdmin('dashboard');
+
+function setMode(mode) {
+  const isCustomer = mode === 'customer';
+  document.getElementById('customer-view').style.display = isCustomer ? 'flex' : 'none';
+  document.getElementById('admin-view').style.display = isCustomer ? 'none' : 'block';
+  document.getElementById('tab-customer').classList.toggle('active', isCustomer);
+  document.getElementById('tab-admin').classList.toggle('active', !isCustomer);
+}
+</script>
+</body>
+</html>
