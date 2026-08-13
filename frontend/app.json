@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "ecomm-native-app",
-    "slug": "ecomm-native-app",
+    "name": "GIGO Shop",
+    "slug": "gigo-shop",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/favicon.png",
     "userInterfaceStyle": "light",
-    "scheme": "ecommnativeapp",
+    "scheme": "gigoshop",
     "splash": {
       "image": "./assets/logo.png",
       "resizeMode": "contain",
@@ -15,14 +15,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.salvadevsketch.ecommnativeapp"
+      "bundleIdentifier": "com.salvadevsketch.gigoshop"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.salvadevsketch.ecommnativeapp"
+      "package": "com.salvadevsketch.gigoshop"
     },
     "web": {
       "favicon": "./assets/favicon.png"

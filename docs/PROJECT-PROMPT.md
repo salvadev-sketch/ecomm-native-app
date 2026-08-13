@@ -1,11 +1,11 @@
-# PROJECT PROMPT: ecomm-native-app
+# PROJECT PROMPT: GIGO Shop (gigo-shop)
 
 ## Overview
 A React Native (Expo, Expo Router) mobile e-commerce app with a companion admin panel, built on top of starter code/assets from a GreatStack YouTube tutorial ("Build E-Commerce App with React Native & Expo | Mobile App Development Step by Step Tutorial 2026"), adapted to match salvadev-sketch's existing stack conventions.
 
 ## GitHub
 - Account: salvadev-sketch
-- Repo: ecomm-native-app (new, public)
+- Repo: gigo-shop (renamed from ecomm-native-app; new, public)
 - Push workflow: user pastes a GitHub PAT in chat when ready to push ("do it yourself"). Clone with token embedded in URL, commit, push, delete local clone, verify push succeeded (don't just trust exit code — re-check a changed file's raw URL), then tell user to revoke/regenerate the token.
 
 ## Stack decisions (already made)
@@ -53,7 +53,7 @@ A React Native (Expo, Expo Router) mobile e-commerce app with a companion admin 
 - Orders: list with customer + shipping info + items + total, update order status via modal (Placed/Processing/Shipped/Cancelled — tutorial also implies Delivered per the Order model)
 
 ## Progress so far
-- [x] Repo name decided: ecomm-native-app
+- [x] Repo name decided: gigo-shop (originally ecomm-native-app, renamed per GIGO branding decision)
 - [x] Backend/frontend folder skeleton created
 - [x] backend/package.json (express, mongoose, firebase-admin, bcryptjs, cors, dotenv, multer, nodemailer)
 - [x] backend/models/User.js
@@ -67,7 +67,7 @@ A React Native (Expo, Expo Router) mobile e-commerce app with a companion admin 
 - [ ] backend/scripts/seedProducts.js (ported from assets/scripts/seedProducts.ts)
 - [ ] frontend: copy in assets, rewrite auth pages for Firebase, wire up API base URL, set up Expo project files (package.json, app.json, tsconfig.json, babel.config.js, tailwind/nativewind config)
 - [ ] Local build/type-check verification before any push (per established lesson: run `npx tsc --noEmit` for backend/frontend TS, don't just assume correctness)
-- [ ] Create GitHub repo (ecomm-native-app) and push (PAT provided by user, held for when work is push-ready — not yet used)
+- [x] Create GitHub repo (gigo-shop) and push — done, confirmed already committed
 - [ ] Deploy: backend to Render, frontend — TBD (Expo apps aren't Vercel-deployable the way web apps are; likely EAS Build / Expo Go for testing, discuss with user before assuming)
 
 ## Open questions / not yet decided

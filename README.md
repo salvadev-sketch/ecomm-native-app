@@ -1,4 +1,4 @@
-# ecomm-native-app
+# GIGO Shop
 
 React Native (Expo Router) e-commerce app with an admin panel and an Express/MongoDB backend.
 

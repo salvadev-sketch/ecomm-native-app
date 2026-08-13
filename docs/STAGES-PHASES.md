@@ -1,8 +1,8 @@
-# ecomm-native-app — Project Stages & Phases
+# GIGO Shop — Project Stages & Phases
 
 React Native (Expo Router) e-commerce app with an admin panel and an Express/MongoDB backend. Built on starter code adapted from a GreatStack tutorial, with Firebase auth (instead of Clerk) to match other salvadev-sketch projects, and a shared MongoDB Atlas cluster.
 
-Repo: https://github.com/salvadev-sketch/ecomm-native-app
+Repo: https://github.com/salvadev-sketch/gigo-shop
 
 ---
 
@@ -10,7 +10,7 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] Received starter code/assets (Expo Router pages, types, product images, seed script) from tutorial zip
 - [x] Confirmed unrelated file (Get_Rewards.pdf, a personal Domino's voucher) is not part of the app
 - [x] Stack decisions locked: Firebase auth (not Clerk), shared Atlas cluster, new repo
-- [x] Repo created: `ecomm-native-app`
+- [x] Repo created: `gigo-shop` (renamed from `ecomm-native-app`)
 - [x] Full project spec written (`docs/PROJECT-PROMPT.md`)
 - [x] Standalone interactive HTML prototype pushed (`frontend/prototype.html`) — customer app + admin panel toggle, matches gigo-food's static-prototype pattern
 
@@ -23,7 +23,7 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 - [x] `backend/index.js` — server entry (mongoose.connect() awaited before app.listen(), verified locally)
 - [x] `backend/.env.example` committed
 - [ ] `backend/scripts/seedProducts.js` — ported from assets/scripts/seedProducts.ts (raw .ts version pushed under frontend/assets/scripts, JS port for backend not yet done)
-- [ ] Real env vars set on Render: MONGO_URI (dedicated `ecomm-native-app` database on shared cluster), FIREBASE_* service account creds — not deployed yet
+- [ ] Real env vars set on Render: MONGO_URI (dedicated `gigo-shop` database on shared cluster), FIREBASE_* service account creds — not deployed yet
 
 ## Stage 3 — Frontend Foundation ✅ DONE
 - [x] Expo project files: `app.json`, `package.json`, `tsconfig.json`, `babel.config.js`, NativeWind/Tailwind config, `global.css`
@@ -62,7 +62,7 @@ Repo: https://github.com/salvadev-sketch/ecomm-native-app
 ## Stage 7 — Build Verification & Push
 - [ ] `npx tsc --noEmit` on backend and frontend before any push (lesson learned from other projects)
 - [ ] Verify `git push` actually succeeded (re-fetch a changed file's raw URL, don't just trust exit code)
-- [ ] Push Stage 2–6 work to `ecomm-native-app` (not yet done — only the docs file has been discussed for push so far)
+- [x] Push Stage 2–6 work to `gigo-shop` — done, confirmed already committed (the "not yet done" note above was stale)
 
 ## Stage 8 — Deployment
 - [ ] Backend → Render (Atlas 0.0.0.0/0 network access, env vars set + redeployed)

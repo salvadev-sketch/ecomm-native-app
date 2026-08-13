@@ -1,7 +1,7 @@
 {
-  "name": "ecomm-native-app-backend",
+  "name": "gigo-shop",
   "version": "1.0.0",
-  "description": "Backend API for ecomm-native-app (React Native / Expo e-commerce app)",
+  "description": "Backend API for GIGO Shop (React Native / Expo e-commerce app)",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {

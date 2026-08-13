@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("ecomm-native-app API is running");
+  res.send("GIGO Shop API is running");
 });
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
