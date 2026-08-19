@@ -60,12 +60,12 @@ A React Native (Expo, Expo Router) mobile e-commerce app with a companion admin 
 - [x] backend/models/Product.js
 - [x] backend/models/Address.js
 - [x] backend/models/Order.js
-- [ ] backend/middleware (Firebase ID token verification + admin role check)
-- [ ] backend/routes (auth-sync, products, orders, addresses)
-- [ ] backend/config (Mongo connection, Firebase Admin init)
-- [ ] backend/index.js (server entry)
-- [ ] backend/scripts/seedProducts.js (ported from assets/scripts/seedProducts.ts)
-- [ ] frontend: copy in assets, rewrite auth pages for Firebase, wire up API base URL, set up Expo project files (package.json, app.json, tsconfig.json, babel.config.js, tailwind/nativewind config)
+- [x] backend/middleware (Firebase ID token verification + admin role check) — middleware/auth.js
+- [x] backend/routes (auth-sync, products, orders, addresses) — all 4 route files done
+- [x] backend/config (Mongo connection, Firebase Admin init) — config/db.js, config/firebase.js
+- [x] backend/index.js (server entry)
+- [ ] backend/scripts/seedProducts.js (ported from assets/scripts/seedProducts.ts) — skipped for now, not needed
+- [x] frontend: auth pages rewritten for Firebase (sign-in.tsx, sign-up.tsx), API base URL wired (config/api.ts), Firebase config set up (config/firebaseConfig.ts)
 - [ ] Local build/type-check verification before any push (per established lesson: run `npx tsc --noEmit` for backend/frontend TS, don't just assume correctness)
 - [x] Create GitHub repo (gigo-shop) and push — done, confirmed already committed
 - [ ] Deploy: backend to Render, frontend — TBD (Expo apps aren't Vercel-deployable the way web apps are; likely EAS Build / Expo Go for testing, discuss with user before assuming)
