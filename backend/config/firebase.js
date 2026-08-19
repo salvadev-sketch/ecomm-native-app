@@ -1,8 +1,10 @@
 const admin = require("firebase-admin");
 
-if (!admin.apps.length) {
+// firebase-admin v13+ dropped the admin.apps / admin.credential compat
+// exports in favor of getApps() and a top-level cert() function.
+if (!admin.getApps().length) {
   admin.initializeApp({
-    credential: admin.credential.cert({
+    credential: admin.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       // Render/most hosts store the private key with literal \n — convert back to real newlines
