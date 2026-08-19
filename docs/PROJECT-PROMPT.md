@@ -59,7 +59,7 @@ A React Native (Expo, Expo Router) mobile e-commerce app with a companion admin 
 - [x] backend/models/User.js
 - [x] backend/models/Product.js
 - [x] backend/models/Address.js
-- [ ] backend/models/Order.js
+- [x] backend/models/Order.js
 - [ ] backend/middleware (Firebase ID token verification + admin role check)
 - [ ] backend/routes (auth-sync, products, orders, addresses)
 - [ ] backend/config (Mongo connection, Firebase Admin init)
